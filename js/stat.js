@@ -43,7 +43,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = '#000';
     ctx.fillText(names[i], CLOUD_X + FONT_GAP * 2 + (BAR_DISTANCE + BAR_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP * 2);
     ctx.fillText(Math.floor(times[i]), CLOUD_X + FONT_GAP * 2 + (BAR_DISTANCE + BAR_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP * 2 - GAP - (BAR_HEIGHT * times[i]) / maxTime - GAP - FONT_GAP);
-    if (names[i] == 'Вы') {
+    if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       var colorRandom = 'hsl(240, ' + Math.floor(Math.random() * 100) + '%, 50%)';
