@@ -13,16 +13,24 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content
     .querySelector('.setup-similar-item');
 
+// Показать элемент, убрав класс  'hidden'
 var showElement = function (showClass) {
   document.querySelector(showClass).classList.remove('hidden');
 };
 
+// Спрятать элемент, добавив класс  'hidden'
+var hideElement = function (hideClass) {
+  document.querySelector(hideClass).classList.add('hidden');
+};
+
+// Выдает один рандомный элемент из массива
 var getRandomElement = function (arr) {
   var numberRandom = Math.round(Math.random() * (arr.length - 1));
 
   return arr[numberRandom];
 };
 
+// Клонирует по шаблону Wizard и задает имя параметры name, coatColor и eyesColor
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
@@ -33,6 +41,7 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
+// Сощдает массив wizard размером WIZARD_NUMBER и рандомными name, coatColor и eyesColor
 var createArrayWizards = function () {
   for (var i = 0; i < WIZARD_NUMBER; i++) {
     wizards[i] = {
@@ -43,6 +52,7 @@ var createArrayWizards = function () {
   }
 };
 
+// Выводит в разметку весь массив wizard
 var renderWizards = function () {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < wizards.length; i++) {
@@ -57,9 +67,10 @@ renderWizards();
 showElement('.setup-similar');
 
 // Задание 4
-
-var ESC_KEY = 'Escape';
-var ENTER_KEY = 'Enter';
+var KEY = {
+  ESC: 'Escape',
+  ENTER: 'Enter'
+};
 
 // Нажатие на элемент .setup-open удаляет класс hidden
 // у блока setup. Нажатие на элемент .setup-close, расположенный
@@ -74,19 +85,60 @@ var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
 var userNameInput = setup.querySelector('.setup-user-name');
 
 var onPopupEscPress = function (evt) {
-  if (evt.key === ESC_KEY && evt.target !== userNameInput) {
+  if (evt.key === KEY.ESC && evt.target !== userNameInput) {
     closePopup();
   }
 };
 
+// Открывает popup по клавише
 var openPopup = function () {
-  setup.classList.remove('hidden');
+  showElement('.setup');
   document.addEventListener('keydown', onPopupEscPress);
 };
 
+// Закрывает popup по клавише
 var closePopup = function () {
-  setup.classList.add('hidden');
+  hideElement('.setup');
   document.removeEventListener('keydown', onPopupEscPress);
+};
+
+// Валидация Input имени пользователя
+var validate = function () {
+  userNameInput.addEventListener('invalid', function (evt) {
+    if (userNameInput.validity.tooShort) {
+      userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+    } else if (userNameInput.validity.tooLong) {
+      userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+    } else if (userNameInput.validity.valueMissing) {
+      userNameInput.setCustomValidity('Обязательное поле');
+    } else {
+      userNameInput.setCustomValidity('');
+    }
+  });
+};
+
+// Выбор рандомных цветов Сoat, Eyes, Fireball для Wizard
+var setupWizard = function () {
+  setupWizardCoat.addEventListener('click', function () {
+    var wizardCoatColor = getRandomElement(WIZARD_COATS);
+    setupWizardCoat.style.fill = wizardCoatColor;
+    setup.querySelector('input[name="coat-color"]').value = wizardCoatColor;
+  });
+
+  setupWizardEyes.addEventListener('click', function () {
+    var wizardEyesColor = getRandomElement(WIZARD_EYES);
+    setupWizardEyes.style.fill = wizardEyesColor;
+    setup.querySelector('input[name="eyes-color"]').value = wizardEyesColor;
+
+  });
+
+  setupWizardFireball.addEventListener('click', function () {
+    var WizardFireballColor = getRandomElement(WIZARD_FIREBALLS);
+    setupWizardFireball.style.background = WizardFireballColor;
+    // почему более точная строчка не срабатывает
+    // setupWizardFireball('input[name="fireball-color"]').value = WizardFireballColor;
+    setup.querySelector('input[name="fireball-color"]').value = WizardFireballColor;
+  });
 };
 
 setupOpen.addEventListener('click', function () {
@@ -94,7 +146,7 @@ setupOpen.addEventListener('click', function () {
 });
 
 setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
+  if (evt.key === KEY.ENTER) {
     openPopup();
   }
 });
@@ -104,43 +156,10 @@ setupClose.addEventListener('click', function () {
 });
 
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
+  if (evt.key === KEY.ENTER) {
     closePopup();
   }
 });
 
-// Валидация Input имени пользователя
-
-userNameInput.addEventListener('invalid', function (evt) {
-  if (userNameInput.validity.tooShort) {
-    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-  } else if (userNameInput.validity.tooLong) {
-    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
-  } else if (userNameInput.validity.valueMissing) {
-    userNameInput.setCustomValidity('Обязательное поле');
-  } else {
-    userNameInput.setCustomValidity('');
-  }
-});
-
-// Выбор рандомных цветов
-setupWizardCoat.addEventListener('click', function () {
-  var wizardCoatColor = getRandomElement(WIZARD_COATS);
-  setupWizardCoat.style.fill = wizardCoatColor;
-  setup.querySelector('input[name="coat-color"]').value = wizardCoatColor;
-});
-
-setupWizardEyes.addEventListener('click', function () {
-  var wizardEyesColor = getRandomElement(WIZARD_EYES);
-  setupWizardEyes.style.fill = wizardEyesColor;
-  setup.querySelector('input[name="eyes-color"]').value = wizardEyesColor;
-
-});
-
-setupWizardFireball.addEventListener('click', function () {
-  var WizardFireballColor = getRandomElement(WIZARD_FIREBALLS);
-  setupWizardFireball.style.background = WizardFireballColor;
-  // почему более точная строчка не срабатывает
-  // setupWizardFireball('input[name="fireball-color"]').value = WizardFireballColor;
-  setup.querySelector('input[name="fireball-color"]').value = WizardFireballColor;
-});
+validate();
+setupWizard();
