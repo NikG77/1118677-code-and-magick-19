@@ -2,7 +2,7 @@
 
 // Показать элемент, убрав класс  'hidden'
 (function () {
-  window.hideElement = function (showClass) {
+  window.showElement = function (showClass) {
     document.querySelector(showClass).classList.remove('hidden');
   };
 })();
