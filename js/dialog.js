@@ -31,6 +31,7 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
+  //  Открывает popup по клику
   setupOpen.addEventListener('click', function () {
     openPopup();
   });
@@ -51,9 +52,10 @@
   window.colorSize(WIZARD_EYES, setupWizardEyes);
   window.colorSize(WIZARD_FIREBALLS, setupWizardFireball);
 
-/*
-  var setupDialogElement = document.querySelector('.setup');
-  var dialogHandler = setupDialogElement.querySelector('.upload');
+
+  // Перещение диалогового окна
+  var dialogHandler = setup.querySelector('.upload');
+  var setupSubmit = setup.querySelector('.setup-submit');
 
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -79,9 +81,8 @@
         y: moveEvt.clientY
       };
 
-      setupDialogElement.style.top = (setupDialogElement.offsetTop - shift.y) + 'px';
-      setupDialogElement.style.left = (setupDialogElement.offsetLeft - shift.x) + 'px';
-
+      setup.style.top = (setup.offsetTop - shift.y) + 'px';
+      setup.style.left = (setup.offsetLeft - shift.x) + 'px';
     };
 
     var onMouseUp = function (upEvt) {
@@ -103,7 +104,14 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+  // При закрытии окна сбрасывает сдвиг смещения окна
+  var onCloseDialog = function () {
+    setup.style.top = null;
+    setup.style.left = null;
+  };
 
-*/
+  setupClose.addEventListener('click', onCloseDialog);
+  setupSubmit.addEventListener('click', onCloseDialog);
+
 })();
 
