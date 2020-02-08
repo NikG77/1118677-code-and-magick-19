@@ -51,7 +51,7 @@
 
   createArrayWizards();
   renderWizards();
-  window.showElement('.setup-similar');
+  window.utils.showElement('.setup-similar');
 
 })();
 

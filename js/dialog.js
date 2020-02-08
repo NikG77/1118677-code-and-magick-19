@@ -15,19 +15,19 @@
 
   var onPopupEscPress = function (evt) {
     if (evt.target !== userNameInput) {
-      window.keyCheck.isEscEvent(evt, closePopup);
+      window.utils.isEscEvent(evt, closePopup);
     }
   };
 
   // Открывает popup по клавише
   var openPopup = function () {
-    window.showElement('.setup');
+    window.utils.showElement('.setup');
     document.addEventListener('keydown', onPopupEscPress);
   };
 
   // Закрывает popup по клавише
   var closePopup = function () {
-    window.hideElement('.setup');
+    window.utils.hideElement('.setup');
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
@@ -37,7 +37,7 @@
   });
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.keyCheck.isEnterEvent(evt, openPopup);
+    window.utils.isEnterEvent(evt, openPopup);
   });
 
   setupClose.addEventListener('click', function () {
@@ -45,7 +45,7 @@
   });
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.keyCheck.isEnterEvent(evt, closePopup);
+    window.utils.isEnterEvent(evt, closePopup);
   });
 
   window.colorSize(WIZARD_COATS, setupWizardCoat);
