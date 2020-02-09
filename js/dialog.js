@@ -8,9 +8,7 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
 
-  var setupWizardCoat = setup.querySelector('.wizard-coat');
-  var setupWizardEyes = setup.querySelector('.wizard-eyes');
-  var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
+
   var userNameInput = setup.querySelector('.setup-user-name');
 
   var onPopupEscPress = function (evt) {
@@ -48,9 +46,16 @@
     window.utils.isEnterEvent(evt, closePopup);
   });
 
-  window.colorSize(WIZARD_COATS, setupWizardCoat);
-  window.colorSize(WIZARD_EYES, setupWizardEyes);
-  window.colorSize(WIZARD_FIREBALLS, setupWizardFireball);
+  var setupWizardCoat = setup.querySelector('.wizard-coat');
+  var setupWizardEyes = setup.querySelector('.wizard-eyes');
+  var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
+  var setupWizardCoatInput = setup.querySelector('input[name="coat-color"]');
+  var setupWizardEyesInput = setup.querySelector('input[name="eyes-color"]');
+  var setupWizardFireballInput = setup.querySelector('input[name="fireball-color"]');
+
+  window.colorSize(WIZARD_COATS, setupWizardCoat, setupWizardCoatInput);
+  window.colorSize(WIZARD_EYES, setupWizardEyes, setupWizardEyesInput);
+  window.colorSize(WIZARD_FIREBALLS, setupWizardFireball, setupWizardFireballInput);
 
 
   // Перещение диалогового окна
