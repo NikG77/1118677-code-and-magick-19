@@ -30,6 +30,7 @@
     window.utils.showElement('.setup-similar');
   };
 
+  // Выводит в созданный div информацию об ошибке
   var onError = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
@@ -44,15 +45,20 @@
 
   window.backend.load(onLoad, onError);
 
-  var form = document.querySelector('.settup-wizard-form');
+  // При успешной отправке скрывает окно настройки
+  var onLoadForm = function () {
+    window.utils.hideElement('.setup-wizard-form');
+    submitButton.textContent = 'Сохранить';
+  };
+
+  var form = document.querySelector('.setup-wizard-form');
+  var submitButton = form.querySelector('.setup-submit');
+
+  // Слушатель на отправку формы
   form.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(form), function () {
-      window.utils.hideElement('.setup-similar');
-    });
+    submitButton.textContent = 'Данные отправляются ...';
+    window.backend.save(new FormData(form), onLoadForm, onError);
     evt.preventDefault();
   });
 
-
 })();
-
-

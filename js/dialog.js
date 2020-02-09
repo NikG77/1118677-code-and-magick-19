@@ -7,10 +7,9 @@
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
-
-
   var userNameInput = setup.querySelector('.setup-user-name');
 
+  // Обработчик закрытия окна
   var onPopupEscPress = function (evt) {
     if (evt.target !== userNameInput) {
       window.utils.isEscEvent(evt, closePopup);
@@ -29,7 +28,7 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  //  Открывает popup по клику
+  // Открывает popup по клику
   setupOpen.addEventListener('click', function () {
     openPopup();
   });
@@ -58,7 +57,7 @@
   window.colorSize(WIZARD_FIREBALLS, setupWizardFireball, setupWizardFireballInput);
 
 
-  // Перещение диалогового окна
+  // Перемещение диалогового окна
   var dialogHandler = setup.querySelector('.upload');
   var setupSubmit = setup.querySelector('.setup-submit');
 
