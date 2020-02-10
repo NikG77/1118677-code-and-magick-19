@@ -47,7 +47,7 @@
 
   // При успешной отправке скрывает окно настройки
   var onLoadForm = function () {
-    window.utils.hideElement('.setup-wizard-form');
+    window.utils.hideElement('.setup');
     submitButton.textContent = 'Сохранить';
   };
 
