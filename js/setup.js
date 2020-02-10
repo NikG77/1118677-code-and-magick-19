@@ -2,7 +2,8 @@
 
 (function () {
   var WIZARD_NUMBER = 4;
-
+  var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
+  var URL_FORM = 'https://js.dump.academy/code-and-magick';
   var similarListElement = document.querySelector('.setup').querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template')
       .content
@@ -21,7 +22,8 @@
   };
 
   // Выводит в разметку весь массив полученных с сервера wizard
-  var onLoad = function (wizards) {
+  var onLoad = function (wizardsOnload) {
+    var wizards = window.utils.getAnyArray(wizardsOnload, WIZARD_NUMBER);
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < WIZARD_NUMBER; i++) {
       fragment.appendChild(renderWizard(wizards[i]));
@@ -55,10 +57,10 @@
   // Слушатель на отправку формы
   form.addEventListener('submit', function (evt) {
     submitButton.textContent = 'Данные отправляются ...';
-    window.backend.save(new FormData(form), onLoadForm, onError);
+    window.backend.save(URL_FORM, new FormData(form), onLoadForm, onError);
     evt.preventDefault();
   });
 
-  window.backend.load(onLoad, onError);
+  window.backend.load(URL_DATA, onLoad, onError);
 
 })();

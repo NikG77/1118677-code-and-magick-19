@@ -36,7 +36,7 @@
       return arr[numberRandom];
     },
     // Выдает на основе входящего массива массив с заданным или рандомным(если не задано) кол-вом элементов
-    getRandomArray: function (arr, numberRandom) {
+    getAnyArray: function (arr, numberRandom) {
       if (!numberRandom) {
         numberRandom = window.utils.getRandomRange(0, arr.length);
       }
