@@ -43,8 +43,6 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.backend.load(onLoad, onError);
-
   // При успешной отправке скрывает окно настройки
   var onLoadForm = function () {
     window.utils.hideElement('.setup-wizard-form');
@@ -60,5 +58,7 @@
     window.backend.save(new FormData(form), onLoadForm, onError);
     evt.preventDefault();
   });
+
+  window.backend.load(onLoad, onError);
 
 })();
