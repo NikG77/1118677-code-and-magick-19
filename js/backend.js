@@ -31,17 +31,17 @@
 
   window.backend = {
     // Выгрузка с сервера данных
-    load: function (URL, onLoad, onError) {
+    load: function (url, onLoad, onError) {
       prepareLoad(onLoad, onError);
 
-      xhr.open('GET', URL);
+      xhr.open('GET', url);
       xhr.send();
     },
     // Отправка формы
-    save: function (URL, data, onLoadForm, onError) {
+    save: function (url, data, onLoadForm, onError) {
       prepareLoad(onLoadForm, onError);
 
-      xhr.open('POST', URL);
+      xhr.open('POST', url);
       xhr.send(data);
     }
 
