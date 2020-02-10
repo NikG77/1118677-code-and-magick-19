@@ -7,37 +7,34 @@
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
-
-  var setupWizardCoat = setup.querySelector('.wizard-coat');
-  var setupWizardEyes = setup.querySelector('.wizard-eyes');
-  var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
   var userNameInput = setup.querySelector('.setup-user-name');
 
+  // Обработчик закрытия окна
   var onPopupEscPress = function (evt) {
     if (evt.target !== userNameInput) {
-      window.keyCheck.isEscEvent(evt, closePopup);
+      window.utils.isEscEvent(evt, closePopup);
     }
   };
 
   // Открывает popup по клавише
   var openPopup = function () {
-    window.showElement('.setup');
+    window.utils.showElement('.setup');
     document.addEventListener('keydown', onPopupEscPress);
   };
 
   // Закрывает popup по клавише
   var closePopup = function () {
-    window.hideElement('.setup');
+    window.utils.hideElement('.setup');
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  //  Открывает popup по клику
+  // Открывает popup по клику
   setupOpen.addEventListener('click', function () {
     openPopup();
   });
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.keyCheck.isEnterEvent(evt, openPopup);
+    window.utils.isEnterEvent(evt, openPopup);
   });
 
   setupClose.addEventListener('click', function () {
@@ -45,15 +42,22 @@
   });
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.keyCheck.isEnterEvent(evt, closePopup);
+    window.utils.isEnterEvent(evt, closePopup);
   });
 
-  window.colorSize(WIZARD_COATS, setupWizardCoat);
-  window.colorSize(WIZARD_EYES, setupWizardEyes);
-  window.colorSize(WIZARD_FIREBALLS, setupWizardFireball);
+  var setupWizardCoat = setup.querySelector('.wizard-coat');
+  var setupWizardEyes = setup.querySelector('.wizard-eyes');
+  var setupWizardFireball = setup.querySelector('.setup-fireball-wrap');
+  var setupWizardCoatInput = setup.querySelector('input[name="coat-color"]');
+  var setupWizardEyesInput = setup.querySelector('input[name="eyes-color"]');
+  var setupWizardFireballInput = setup.querySelector('input[name="fireball-color"]');
+
+  window.colorSize(WIZARD_COATS, setupWizardCoat, setupWizardCoatInput);
+  window.colorSize(WIZARD_EYES, setupWizardEyes, setupWizardEyesInput);
+  window.colorSize(WIZARD_FIREBALLS, setupWizardFireball, setupWizardFireballInput);
 
 
-  // Перещение диалогового окна
+  // Перемещение диалогового окна
   var dialogHandler = setup.querySelector('.upload');
   var setupSubmit = setup.querySelector('.setup-submit');
 
