@@ -52,9 +52,10 @@
   var setupWizardEyesInput = setup.querySelector('input[name="eyes-color"]');
   var setupWizardFireballInput = setup.querySelector('input[name="fireball-color"]');
 
-  window.colorSize(WIZARD_COATS, setupWizardCoat, setupWizardCoatInput);
-  window.colorSize(WIZARD_EYES, setupWizardEyes, setupWizardEyesInput);
-  window.colorSize(WIZARD_FIREBALLS, setupWizardFireball, setupWizardFireballInput);
+  window.colorSize.colorChange(WIZARD_COATS, setupWizardCoat, setupWizardCoatInput);
+  window.colorSize.colorChange(WIZARD_EYES, setupWizardEyes, setupWizardEyesInput);
+
+  window.colorSize.colorChange(WIZARD_FIREBALLS, setupWizardFireball, setupWizardFireballInput);
 
 
   // Перемещение диалогового окна

@@ -20,13 +20,12 @@
   };
 
   // Выводит в разметку весь массив полученных с сервера wizard
-  window.render = function (wizardsOnload) {
-    var wizards = window.utils.getAnyArray(wizardsOnload, WIZARD_NUMBER);
+  window.render = function (data) {
     var fragment = document.createDocumentFragment();
-    var takeNumber = wizardsOnload.length > 4 ? 4 : wizardsOnload.length;
+    var takeNumber = data.length > WIZARD_NUMBER ? WIZARD_NUMBER : data.length;
     similarListElement.innerHTML = '';
     for (var i = 0; i < takeNumber; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+      fragment.appendChild(renderWizard(data[i]));
     }
     similarListElement.appendChild(fragment);
     window.utils.showElement('.setup-similar');

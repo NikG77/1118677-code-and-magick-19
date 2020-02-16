@@ -3,9 +3,50 @@
 (function () {
   var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
   var URL_FORM = 'https://js.dump.academy/code-and-magick';
+  var wizards = [];
 
-  var onLoad = function (wizardsOnload) {
-    window.render(wizardsOnload);
+  var setup = document.querySelector('.setup');
+  var setupWizardCoatInput = setup.querySelector('input[name="coat-color"]');
+  var setupWizardEyesInput = setup.querySelector('input[name="eyes-color"]');
+
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === setupWizardCoatInput.value) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === setupWizardEyesInput.value) {
+      rank += 1;
+    }
+
+    return rank;
+  };
+
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
+  window.setup = {
+    updateWizards: function () {
+      window.render(wizards.sort(function (left, right) {
+        var rankDiff = getRank(right) - getRank(left);
+        if (rankDiff === 0) {
+          rankDiff = namesComparator(left.name, right.name);
+        }
+        return rankDiff;
+      }));
+    }
+  };
+
+  var onLoad = function (data) {
+    wizards = data;
+    window.setup.updateWizards();
   };
 
   // Выводит в созданный div информацию об ошибке
