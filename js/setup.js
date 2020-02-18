@@ -1,35 +1,47 @@
 'use strict';
 
 (function () {
-  var WIZARD_NUMBER = 4;
   var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
   var URL_FORM = 'https://js.dump.academy/code-and-magick';
-  var similarListElement = document.querySelector('.setup').querySelector('.setup-similar-list');
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template')
-      .content
-      .querySelector('.setup-similar-item');
+  var wizards = [];
+  var coatColor;
+  var eyesColor;
 
+  var getRank = function (wizard) {
+    var rank = 0;
 
-  // Клонирует по шаблону Wizard и задает имя параметры name, coatColor и eyesColor
-  var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
-
-    return wizardElement;
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+    return rank;
   };
 
-  // Выводит в разметку весь массив полученных с сервера wizard
-  var onLoad = function (wizardsOnload) {
-    var wizards = window.utils.getAnyArray(wizardsOnload, WIZARD_NUMBER);
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < WIZARD_NUMBER; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
-    }
-    similarListElement.appendChild(fragment);
-    window.utils.showElement('.setup-similar');
+  var updateWizards = function () {
+    window.render(wizards.sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = wizards.indexOf(left) - wizards.indexOf(right);
+      }
+      return rankDiff;
+    }));
+  };
+
+  window.colorSize.onEyesChange = window.debounce(function (color) {
+    eyesColor = color;
+    updateWizards();
+  });
+
+  window.colorSize.onCoatChange = window.debounce(function (color) {
+    coatColor = color;
+    updateWizards();
+  });
+
+  var onLoad = function (data) {
+    wizards = data;
+    updateWizards();
   };
 
   // Выводит в созданный div информацию об ошибке
