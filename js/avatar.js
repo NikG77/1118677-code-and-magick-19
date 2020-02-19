@@ -5,6 +5,7 @@
 
   var fileChooser = document.querySelector('.upload input[type=file]');
   var preview = document.querySelector('.setup-user-pic');
+  var previewSetup = document.querySelector('.setup-open-icon');
 
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
@@ -19,6 +20,7 @@
 
       reader.addEventListener('load', function () {
         preview.src = reader.result;
+        previewSetup.src = reader.result;
       });
 
       reader.readAsDataURL(file);
